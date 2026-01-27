@@ -95,10 +95,26 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		const mq = window.matchMedia("(min-width: 1024px)");
 
+		const alignRailToFirstRef = () => {
+			if (!mq.matches) return;
+			footnoteRail.style.marginTop = "0px";
+			const firstRef = articleBody.querySelector(
+				"a.footnote-ref, sup[id^='fnref'] a, sup[id^='fnref'] > a",
+			) as HTMLElement | null;
+			if (!firstRef) return;
+			const railTop = footnoteRail.getBoundingClientRect().top;
+			const refTop = firstRef.getBoundingClientRect().top;
+			const offset = Math.max(0, refTop - railTop);
+			if (offset > 0) {
+				footnoteRail.style.marginTop = `${offset}px`;
+			}
+		};
+
 		const moveToRail = () => {
 			footnoteRail.hidden = false;
 			footnoteRail.replaceChildren(footnotes);
 			footnotes.classList.add("footnotes--rail");
+			alignRailToFirstRef();
 		};
 
 		const moveBackInline = () => {
@@ -106,6 +122,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 			footnotes.classList.remove("footnotes--rail");
 			placeholder.parentNode?.insertBefore(footnotes, placeholder.nextSibling);
 			footnoteRail.replaceChildren();
+			footnoteRail.style.marginTop = "0px";
 		};
 
 		const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
@@ -118,5 +135,6 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 		mq.addEventListener("change", handleChange);
 		handleChange(mq);
+		window.addEventListener("resize", alignRailToFirstRef);
 	}
 </script>
