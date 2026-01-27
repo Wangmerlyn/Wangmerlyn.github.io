@@ -37,7 +37,7 @@ This file defines how coding agents should work in this repository.
 ### Quality Bar
 
 - Prefer root-cause fixes over defensive patches.
-- Keep it “Linus” simple—concise, readable, and robust; avoid bloat/over-engineering.
+- Keep it "Linus" simple - concise, readable, and robust; avoid bloat/over-engineering.
 - Run the smallest relevant checks first (unit tests, targeted scripts), then broader checks when needed.
 - Add tests when there is an existing test pattern; do not introduce a brand-new testing framework unless requested.
 
