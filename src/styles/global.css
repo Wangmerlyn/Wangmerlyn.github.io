@@ -70,9 +70,14 @@
 		@apply text-accent-2 text-2xl font-semibold;
 	}
 
+	.toc-block {
+		order: 0;
+	}
+
 	.footnote-rail {
 		border-left: 1px dashed #666;
 		padding-inline-start: 1rem;
+		order: 1;
 	}
 
 	.footnote-rail .footnotes {

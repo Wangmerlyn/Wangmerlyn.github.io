@@ -40,7 +40,11 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 				class="flex flex-col gap-8 lg:sticky lg:top-12 lg:self-start lg:text-sm lg:text-zinc-600 dark:lg:text-zinc-300"
 				aria-label="Page extras"
 			>
-				{!!headings.length && <TOC headings={headings} />}
+				{!!headings.length && (
+					<div class="toc-block">
+						<TOC headings={headings} />
+					</div>
+				)}
 				<div id="footnote-rail" class="footnote-rail hidden space-y-4 lg:block" aria-label="Footnotes"></div>
 			</aside>
 		</div>
