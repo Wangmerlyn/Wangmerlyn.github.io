@@ -29,14 +29,20 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 >
 	<article class="grow break-words" data-pagefind-body>
 		<div id="blog-hero" class="mb-12"><Masthead content={post} readingTime={readingTime} /></div>
-		<div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-			{!!headings.length && <TOC headings={headings} />}
+		<div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-start">
 			<div
-				class="prose prose-sm prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-gray-600 prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none"
+				class="prose prose-sm prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-gray-600 prose-headings:hover:before:text-accent sm:prose-headings:before:content-['#'] sm:prose-th:before:content-none article-body"
 			>
 				<slot />
 				<WebMentions />
 			</div>
+			<aside
+				class="flex flex-col gap-8 lg:sticky lg:top-12 lg:self-start lg:text-sm lg:text-zinc-600 dark:lg:text-zinc-300"
+				aria-label="Page extras"
+			>
+				{!!headings.length && <TOC headings={headings} />}
+				<div id="footnote-rail" class="footnote-rail hidden space-y-4 lg:block" aria-label="Footnotes"></div>
+			</aside>
 		</div>
 	</article>
 	<button
@@ -77,4 +83,40 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 
 	const observer = new IntersectionObserver(callback);
 	observer.observe(targetHeader);
+
+	// Move rendered markdown footnotes into the right rail on desktop while keeping them inline on mobile.
+	const articleBody = document.querySelector(".article-body") as HTMLDivElement | null;
+	const footnotes = articleBody?.querySelector("section.footnotes") as HTMLElement | null;
+	const footnoteRail = document.getElementById("footnote-rail") as HTMLDivElement | null;
+
+	if (articleBody && footnotes && footnoteRail) {
+		const placeholder = document.createComment("footnotes-placeholder");
+		footnotes.parentNode?.insertBefore(placeholder, footnotes);
+
+		const mq = window.matchMedia("(min-width: 1024px)");
+
+		const moveToRail = () => {
+			footnoteRail.hidden = false;
+			footnoteRail.replaceChildren(footnotes);
+			footnotes.classList.add("footnotes--rail");
+		};
+
+		const moveBackInline = () => {
+			footnoteRail.hidden = true;
+			footnotes.classList.remove("footnotes--rail");
+			placeholder.parentNode?.insertBefore(footnotes, placeholder.nextSibling);
+			footnoteRail.replaceChildren();
+		};
+
+		const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
+			if (event.matches) {
+				moveToRail();
+				return;
+			}
+			moveBackInline();
+		};
+
+		mq.addEventListener("change", handleChange);
+		handleChange(mq);
+	}
 </script>

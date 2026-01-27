@@ -69,6 +69,34 @@
 	.title {
 		@apply text-accent-2 text-2xl font-semibold;
 	}
+
+	.footnote-rail {
+		border-left: 1px dashed #666;
+		padding-inline-start: 1rem;
+	}
+
+	.footnote-rail .footnotes {
+		margin: 0;
+	}
+
+	.footnote-rail h2 {
+		margin: 0 0 0.25rem;
+		font-size: var(--text-sm);
+		color: var(--color-accent-2);
+		font-weight: 600;
+	}
+
+	.footnote-rail ol {
+		list-style: decimal;
+		padding-inline-start: 1rem;
+		margin: 0;
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.footnotes--rail {
+		margin-top: 0;
+	}
 }
 
 @utility prose {
