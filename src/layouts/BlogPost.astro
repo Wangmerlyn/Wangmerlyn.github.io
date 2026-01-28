@@ -92,26 +92,34 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 	const articleBody = document.querySelector(".article-body") as HTMLDivElement | null;
 	const footnotes = articleBody?.querySelector("section.footnotes") as HTMLElement | null;
 	const footnoteRail = document.getElementById("footnote-rail") as HTMLDivElement | null;
+	const tocBlock = document.querySelector(".toc-block") as HTMLDivElement | null;
 
 	if (articleBody && footnotes && footnoteRail) {
 		const placeholder = document.createComment("footnotes-placeholder");
 		footnotes.parentNode?.insertBefore(placeholder, footnotes);
 
 		const mq = window.matchMedia("(min-width: 1024px)");
+		const GAP_PX = 12;
 
 		const alignRailToFirstRef = () => {
 			if (!mq.matches) return;
-			footnoteRail.style.marginTop = "0px";
 			const firstRef = articleBody.querySelector(
 				"a.footnote-ref, sup[id^='fnref'] a, sup[id^='fnref'] > a",
 			) as HTMLElement | null;
 			if (!firstRef) return;
+			// measure baseline position without previous adjustments
+			footnoteRail.style.marginTop = "0px";
 			const railTop = footnoteRail.getBoundingClientRect().top;
 			const refTop = firstRef.getBoundingClientRect().top;
-			const offset = Math.max(0, refTop - railTop);
-			if (offset > 0) {
-				footnoteRail.style.marginTop = `${offset}px`;
+			let desiredMargin = refTop - railTop; // negative -> raise, positive -> lower
+
+			if (tocBlock) {
+				const tocBottom = tocBlock.getBoundingClientRect().bottom;
+				const minMargin = tocBottom + GAP_PX - railTop; // keep below TOC + gap
+				desiredMargin = Math.max(desiredMargin, minMargin);
 			}
+
+			footnoteRail.style.marginTop = `${Math.round(desiredMargin)}px`;
 		};
 
 		const moveToRail = () => {
@@ -140,5 +148,19 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		mq.addEventListener("change", handleChange);
 		handleChange(mq);
 		window.addEventListener("resize", alignRailToFirstRef);
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (ticking) return;
+				ticking = true;
+				requestAnimationFrame(() => {
+					alignRailToFirstRef();
+					ticking = false;
+				});
+			},
+			{ passive: true },
+		);
 	}
 </script>
