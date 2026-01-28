@@ -1,0 +1,43 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+	description: "Credits and attributions for this site.",
+	title: "Credits",
+};
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-12">Credits</h1>
+	<div class="prose prose-sm prose-cactus max-w-none">
+		<p>
+			This site is built on top of the open-source
+			<a
+				class="cactus-link inline-block"
+				href="https://github.com/chrismwilliams/astro-cactus"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				astro-theme-cactus
+			</a>
+			template by Chris Williams.
+		</p>
+		<p>
+			The theme combines Astro, Tailwind CSS, and Expressive Code for syntax highlighting, plus built-in
+			dark mode, RSS, sitemap, and OG image generation. Icons are provided via
+			<a
+				class="cactus-link inline-block"
+				href="https://astro-icon.dev/"
+				rel="noopener noreferrer"
+				target="_blank"
+			>
+				astro-icon
+			</a>
+			.
+		</p>
+		<p>
+			Many thanks to the maintainers and contributors of these upstream projects for making it easy to
+			ship a fast, content-focused blog.
+		</p>
+	</div>
+</PageLayout>
