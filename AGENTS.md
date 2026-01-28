@@ -44,6 +44,7 @@ This file defines how coding agents should work in this repository.
 ### Git Hygiene & Security
 
 - Commit messages: use `type(scope): summary`.
+- PR titles: format `[modules] type: description` (modules comma-separated, single type).
 - Never commit secrets (tokens, credentials files).
 - Avoid destructive git operations unless explicitly requested (e.g., `reset --hard`, force-push).
 
