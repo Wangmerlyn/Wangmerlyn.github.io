@@ -14,6 +14,7 @@ interface Props {
 const { post } = Astro.props;
 const { ogImage, title, description, updatedDate, publishDate } = post.data;
 const enableFootnotesSidebar = post.data.footnotesSidebar ?? false;
+const enableTocSidebar = post.data.tocSidebar ?? true;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings, remarkPluginFrontmatter } = await render(post);
@@ -41,7 +42,7 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 				class="flex flex-col gap-8 lg:sticky lg:top-12 lg:self-start lg:text-sm lg:text-zinc-600 dark:lg:text-zinc-300"
 				aria-label="Page extras"
 			>
-				{!!headings.length && (
+				{!!headings.length && enableTocSidebar && (
 					<div class="toc-block">
 						<TOC headings={headings} />
 					</div>

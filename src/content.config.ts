@@ -35,6 +35,7 @@ const post = defineCollection({
 				.transform((str) => (str ? new Date(str) : undefined)),
 			pinned: z.boolean().default(false),
 			footnotesSidebar: z.boolean().default(false),
+			tocSidebar: z.boolean().default(true),
 		}),
 });
 
