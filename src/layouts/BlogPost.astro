@@ -121,7 +121,8 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 			footnoteRail.style.marginTop = "0px";
 			const railTop = footnoteRail.getBoundingClientRect().top;
 			const refTop = firstRef.getBoundingClientRect().top;
-			let desiredMargin = refTop - railTop; // negative -> raise, positive -> lower
+			const headingHeight = footnotes.querySelector("h2")?.getBoundingClientRect().height ?? 0;
+			let desiredMargin = refTop - railTop - headingHeight; // negative -> raise, positive -> lower
 
 			if (tocBlock) {
 				const tocBottom = tocBlock.getBoundingClientRect().bottom;
