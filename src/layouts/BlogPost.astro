@@ -113,34 +113,47 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 
 		const alignFootnotes = () => {
 			if (!mq.matches) return;
+
 			footnoteRail.style.marginTop = "0px";
+			footnoteRail.style.position = "relative";
+			footnotes.style.position = "relative";
+			footnotes.style.minHeight = "0px";
 
-			const initialRailTop = footnoteRail.getBoundingClientRect().top;
-			const tocFloor = tocBlock ? tocBlock.getBoundingClientRect().bottom + GAP_PX : initialRailTop;
-			const railMargin = Math.max(0, tocFloor - initialRailTop);
-			footnoteRail.style.marginTop = `${Math.round(railMargin)}px`;
+			const railPageTop = footnoteRail.getBoundingClientRect().top + window.scrollY;
+			const tocFloorPage = tocBlock
+				? tocBlock.getBoundingClientRect().bottom + window.scrollY + GAP_PX
+				: railPageTop;
 
-			const railTop = footnoteRail.getBoundingClientRect().top;
-			let cursor = tocBlock ? tocBlock.getBoundingClientRect().bottom + GAP_PX : railTop;
+			let cursor = tocFloorPage;
+			let maxBottom = 0;
 
 			const items = Array.from(footnotes.querySelectorAll("ol > li[id^='fn']")) as HTMLElement[];
+
 			for (const li of items) {
 				li.style.marginTop = "0px";
+				li.style.position = "absolute";
+				li.style.top = "0px";
 			}
 
 			for (const li of items) {
-				const liRect = li.getBoundingClientRect();
 				const ref =
 					document.querySelector(`a[href="#${li.id}"]`) ||
 					document.getElementById(li.id.replace(/^fn/, "fnref:")) ||
 					document.getElementById(li.id.replace(/^fn/, "fnref-"));
-				const refTop = ref?.getBoundingClientRect().top ?? liRect.top;
-				const targetTop = Math.max(refTop, cursor);
-				const margin = Math.max(0, targetTop - liRect.top);
-				li.style.marginTop = `${Math.round(margin)}px`;
-				const newBottom = li.getBoundingClientRect().bottom + margin + GAP_PX;
-				cursor = Math.max(cursor, newBottom);
+
+				const refTopPage = (ref?.getBoundingClientRect().top ?? railPageTop) + window.scrollY;
+				const targetTopPage = Math.max(refTopPage, cursor);
+				const topWithinRail = targetTopPage - railPageTop;
+
+				li.style.top = `${Math.round(topWithinRail)}px`;
+
+				const liHeight = li.getBoundingClientRect().height;
+				cursor = Math.max(cursor, targetTopPage + liHeight + GAP_PX);
+				maxBottom = Math.max(maxBottom, topWithinRail + liHeight);
 			}
+
+			footnotes.style.minHeight = `${Math.round(maxBottom + GAP_PX)}px`;
+			footnoteRail.style.minHeight = footnotes.style.minHeight;
 		};
 
 		const moveToRail = () => {
@@ -156,6 +169,16 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 			placeholder.parentNode?.insertBefore(footnotes, placeholder.nextSibling);
 			footnoteRail.replaceChildren();
 			footnoteRail.style.marginTop = "0px";
+			footnoteRail.style.position = "";
+			footnoteRail.style.minHeight = "";
+			footnotes.style.position = "";
+			footnotes.style.minHeight = "";
+			const items = Array.from(footnotes.querySelectorAll("ol > li[id^='fn']")) as HTMLElement[];
+			for (const li of items) {
+				li.style.position = "";
+				li.style.top = "";
+				li.style.marginTop = "";
+			}
 		};
 
 		const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
