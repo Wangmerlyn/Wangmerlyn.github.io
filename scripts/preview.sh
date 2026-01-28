@@ -20,4 +20,4 @@ if ! command -v pnpm >/dev/null 2>&1; then
 fi
 
 pnpm build
-pnpm preview --host --port "$PORT"
+pnpm preview --host localhost --port "$PORT"
