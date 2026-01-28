@@ -80,6 +80,10 @@
 		order: 1;
 	}
 
+	.footnote-rail[hidden] {
+		display: none;
+	}
+
 	.footnote-rail .footnotes {
 		margin: 0;
 	}

@@ -13,6 +13,7 @@ interface Props {
 
 const { post } = Astro.props;
 const { ogImage, title, description, updatedDate, publishDate } = post.data;
+const enableFootnotesSidebar = post.data.footnotesSidebar ?? false;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings, remarkPluginFrontmatter } = await render(post);
@@ -45,7 +46,13 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 						<TOC headings={headings} />
 					</div>
 				)}
-				<div id="footnote-rail" class="footnote-rail hidden space-y-4 lg:block" aria-label="Footnotes"></div>
+				<div
+					id="footnote-rail"
+					class="footnote-rail space-y-4 lg:block"
+					aria-label="Footnotes"
+					data-enabled={enableFootnotesSidebar}
+					hidden={!enableFootnotesSidebar}
+				></div>
 			</aside>
 		</div>
 	</article>
@@ -85,18 +92,20 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		document.documentElement.scrollTo({ behavior: "smooth", top: 0 });
 	});
 
-	const observer = new IntersectionObserver(callback);
-	observer.observe(targetHeader);
+const observer = new IntersectionObserver(callback);
+observer.observe(targetHeader);
 
-	// Move rendered markdown footnotes into the right rail on desktop while keeping them inline on mobile.
-	const articleBody = document.querySelector(".article-body") as HTMLDivElement | null;
-	const footnotes = articleBody?.querySelector("section.footnotes") as HTMLElement | null;
-	const footnoteRail = document.getElementById("footnote-rail") as HTMLDivElement | null;
-	const tocBlock = document.querySelector(".toc-block") as HTMLDivElement | null;
+// Move rendered markdown footnotes into the right rail on desktop while keeping them inline on mobile.
+const articleBody = document.querySelector(".article-body") as HTMLDivElement | null;
+const footnotes = articleBody?.querySelector("section.footnotes") as HTMLElement | null;
+const footnoteRail = document.getElementById("footnote-rail") as HTMLDivElement | null;
+const tocBlock = document.querySelector(".toc-block") as HTMLDivElement | null;
 
-	if (articleBody && footnotes && footnoteRail) {
-		const placeholder = document.createComment("footnotes-placeholder");
-		footnotes.parentNode?.insertBefore(placeholder, footnotes);
+const footnotesSidebarEnabled = footnoteRail?.dataset.enabled === "true";
+
+if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
+	const placeholder = document.createComment("footnotes-placeholder");
+	footnotes.parentNode?.insertBefore(placeholder, footnotes);
 
 		const mq = window.matchMedia("(min-width: 1024px)");
 		const GAP_PX = 12;
