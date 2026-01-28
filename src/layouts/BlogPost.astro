@@ -111,33 +111,43 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 		const mq = window.matchMedia("(min-width: 1024px)");
 		const GAP_PX = 12;
 
-		const alignRailToFirstRef = () => {
+		const alignFootnotes = () => {
 			if (!mq.matches) return;
-			const firstRef = articleBody.querySelector(
-				"a.footnote-ref, sup[id^='fnref'] a, sup[id^='fnref'] > a",
-			) as HTMLElement | null;
-			if (!firstRef) return;
-			// measure baseline position without previous adjustments
 			footnoteRail.style.marginTop = "0px";
-			const railTop = footnoteRail.getBoundingClientRect().top;
-			const refTop = firstRef.getBoundingClientRect().top;
-			const headingHeight = footnotes.querySelector("h2")?.getBoundingClientRect().height ?? 0;
-			let desiredMargin = refTop - railTop - headingHeight; // negative -> raise, positive -> lower
 
-			if (tocBlock) {
-				const tocBottom = tocBlock.getBoundingClientRect().bottom;
-				const minMargin = tocBottom + GAP_PX - railTop; // keep below TOC + gap
-				desiredMargin = Math.max(desiredMargin, minMargin);
+			const initialRailTop = footnoteRail.getBoundingClientRect().top;
+			const tocFloor = tocBlock ? tocBlock.getBoundingClientRect().bottom + GAP_PX : initialRailTop;
+			const railMargin = Math.max(0, tocFloor - initialRailTop);
+			footnoteRail.style.marginTop = `${Math.round(railMargin)}px`;
+
+			const railTop = footnoteRail.getBoundingClientRect().top;
+			let cursor = tocBlock ? tocBlock.getBoundingClientRect().bottom + GAP_PX : railTop;
+
+			const items = Array.from(footnotes.querySelectorAll("ol > li[id^='fn']")) as HTMLElement[];
+			for (const li of items) {
+				li.style.marginTop = "0px";
 			}
 
-			footnoteRail.style.marginTop = `${Math.round(desiredMargin)}px`;
+			for (const li of items) {
+				const liRect = li.getBoundingClientRect();
+				const ref =
+					document.querySelector(`a[href="#${li.id}"]`) ||
+					document.getElementById(li.id.replace(/^fn/, "fnref:")) ||
+					document.getElementById(li.id.replace(/^fn/, "fnref-"));
+				const refTop = ref?.getBoundingClientRect().top ?? liRect.top;
+				const targetTop = Math.max(refTop, cursor);
+				const margin = Math.max(0, targetTop - liRect.top);
+				li.style.marginTop = `${Math.round(margin)}px`;
+				const newBottom = li.getBoundingClientRect().bottom + margin + GAP_PX;
+				cursor = Math.max(cursor, newBottom);
+			}
 		};
 
 		const moveToRail = () => {
 			footnoteRail.hidden = false;
 			footnoteRail.replaceChildren(footnotes);
 			footnotes.classList.add("footnotes--rail");
-			alignRailToFirstRef();
+			alignFootnotes();
 		};
 
 		const moveBackInline = () => {
@@ -158,7 +168,7 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 
 		mq.addEventListener("change", handleChange);
 		handleChange(mq);
-		window.addEventListener("resize", alignRailToFirstRef);
+		window.addEventListener("resize", alignFootnotes);
 
 		let ticking = false;
 		window.addEventListener(
@@ -167,7 +177,7 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 				if (ticking) return;
 				ticking = true;
 				requestAnimationFrame(() => {
-					alignRailToFirstRef();
+					alignFootnotes();
 					ticking = false;
 				});
 			},
