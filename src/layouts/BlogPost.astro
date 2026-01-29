@@ -108,8 +108,9 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 	const placeholder = document.createComment("footnotes-placeholder");
 	footnotes.parentNode?.insertBefore(placeholder, footnotes);
 
-		const mq = window.matchMedia("(min-width: 1024px)");
-		const GAP_PX = 12;
+	const mq = window.matchMedia("(min-width: 1024px)");
+	const GAP_PX = 12;
+	const FOOTNOTE_SELECTOR = "ol > li[id*='fn']";
 
 		const findFootnoteRef = (footnoteId: string): HTMLElement | null =>
 			document.querySelector(`a[href="#${footnoteId}"]`) ||
@@ -132,7 +133,7 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 			let cursor = tocFloorPage;
 			let maxBottom = 0;
 
-			const items = Array.from(footnotes.querySelectorAll("ol > li[id*='fn']")) as HTMLElement[];
+			const items = Array.from(footnotes.querySelectorAll(FOOTNOTE_SELECTOR)) as HTMLElement[];
 
 			for (const li of items) {
 				li.style.marginTop = "0px";
@@ -175,7 +176,7 @@ if (footnotesSidebarEnabled && articleBody && footnotes && footnoteRail) {
 			footnoteRail.style.minHeight = "";
 			footnotes.style.position = "";
 			footnotes.style.minHeight = "";
-			const items = Array.from(footnotes.querySelectorAll("ol > li[id*='fn']")) as HTMLElement[];
+			const items = Array.from(footnotes.querySelectorAll(FOOTNOTE_SELECTOR)) as HTMLElement[];
 			for (const li of items) {
 				li.style.position = "";
 				li.style.top = "";
