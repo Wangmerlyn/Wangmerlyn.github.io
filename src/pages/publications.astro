@@ -1,0 +1,103 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+	description: "Publications and preprints by Siyuan Wang.",
+	title: "Publications",
+};
+
+const highlightName = "Siyuan Wang";
+
+const publications = [
+	{
+		title: "Look Back to Reason Forward: Revisitable Memory for Long-Context LLM Agents",
+		link: "https://arxiv.org/abs/2509.23040",
+		venue: "ICLR 2026 (accepted)",
+		authors: [
+			"Yaorui Shi",
+			"Yuxin Chen",
+			"Siyuan Wang",
+			"Sihang Li",
+			"Hengxing Cai",
+			"Qi Gu",
+			"Xiang Wang",
+			"An Zhang",
+		],
+	},
+	{
+		title: "LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts",
+		link: "https://arxiv.org/abs/2510.19363",
+		venue: "ICLR 2026 (accepted)",
+		authors: [
+			"Siyuan Wang",
+			"Gaokai Zhang",
+			"Li Lyna Zhang",
+			"Ning Shang",
+			"Fan Yang",
+			"Dongyao Chen",
+			"Mao Yang",
+		],
+	},
+	{
+		title: "LongRoPE2: Near-Lossless LLM Context Window Scaling",
+		link: "https://arxiv.org/abs/2502.20082v1",
+		venue: "ICML 2025 (accepted)",
+		authors: [
+			"Ning Shang",
+			"Li Lyna Zhang",
+			"Siyuan Wang",
+			"Gaokai Zhang",
+			"Gilsinia Lopez",
+			"Fan Yang",
+			"Weizhu Chen",
+			"Mao Yang",
+		],
+	},
+	{
+		title: "AIonopedia: an LLM agent orchestrating multimodal learning for ionic liquid discovery",
+		link: "https://arxiv.org/abs/2511.11257",
+		venue: "Preprint",
+		authors: [
+			"Yuqi Yin",
+			"Yibo Fu",
+			"Siyuan Wang",
+			"Peng Sun",
+			"Hongyu Wang",
+			"Xiaohui Wang",
+			"Lei Zheng",
+			"Zhiyong Li",
+			"Zhirong Liu",
+			"Jianji Wang",
+			"Zhaoxi Sun",
+		],
+	},
+];
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-12">Publications</h1>
+	<div class="prose prose-sm prose-cactus max-w-none space-y-8">
+		{publications.map((pub) => (
+			<article class="space-y-2">
+				<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+					<h2 class="text-lg font-semibold">
+						<a class="cactus-link" href={pub.link} rel="noopener noreferrer" target="_blank">
+							{pub.title}
+						</a>
+					</h2>
+					<span class="inline-flex max-w-fit items-center rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide dark:border-zinc-500">
+						{pub.venue}
+					</span>
+				</div>
+				<p class="text-sm leading-relaxed">
+					{pub.authors.map((name, idx) => (
+						<>
+							{ name === highlightName ? <strong class="text-accent">{name}</strong> : name }
+							{idx < pub.authors.length - 1 ? ", " : ""}
+						</>
+					))}
+				</p>
+			</article>
+		))}
+	</div>
+</PageLayout>
