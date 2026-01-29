@@ -1,4 +1,7 @@
-export type Author = { name: string; coFirst?: boolean };
+export type Author = {
+	name: string;
+	coFirst?: boolean;
+};
 
 export type Publication = {
 	title: string;
@@ -15,7 +18,7 @@ export const publications: Publication[] = [
 		authors: [
 			{ name: "Yaorui Shi" },
 			{ name: "Yuxin Chen" },
-			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Siyuan Wang" },
 			{ name: "Sihang Li" },
 			{ name: "Hengxing Cai" },
 			{ name: "Qi Gu" },
@@ -44,7 +47,7 @@ export const publications: Publication[] = [
 		authors: [
 			{ name: "Ning Shang", coFirst: true },
 			{ name: "Li Lyna Zhang", coFirst: true },
-			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Siyuan Wang" },
 			{ name: "Gaokai Zhang" },
 			{ name: "Gilsinia Lopez" },
 			{ name: "Fan Yang" },
