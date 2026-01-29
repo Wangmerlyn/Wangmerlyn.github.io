@@ -8,20 +8,27 @@ const meta = {
 
 const highlightName = "Siyuan Wang";
 
-const publications = [
+type Author = { name: string; coFirst?: boolean };
+
+const publications: {
+	title: string;
+	link: string;
+	venue: string;
+	authors: Author[];
+}[] = [
 	{
 		title: "Look Back to Reason Forward: Revisitable Memory for Long-Context LLM Agents",
 		link: "https://arxiv.org/abs/2509.23040",
 		venue: "ICLR 2026",
 		authors: [
-			"Yaorui Shi",
-			"Yuxin Chen",
-			"Siyuan Wang",
-			"Sihang Li",
-			"Hengxing Cai",
-			"Qi Gu",
-			"Xiang Wang",
-			"An Zhang",
+			{ name: "Yaorui Shi" },
+			{ name: "Yuxin Chen" },
+			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Sihang Li" },
+			{ name: "Hengxing Cai" },
+			{ name: "Qi Gu" },
+			{ name: "Xiang Wang" },
+			{ name: "An Zhang" },
 		],
 	},
 	{
@@ -29,13 +36,13 @@ const publications = [
 		link: "https://arxiv.org/abs/2510.19363",
 		venue: "ICLR 2026",
 		authors: [
-			"Siyuan Wang",
-			"Gaokai Zhang",
-			"Li Lyna Zhang",
-			"Ning Shang",
-			"Fan Yang",
-			"Dongyao Chen",
-			"Mao Yang",
+			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Gaokai Zhang", coFirst: true },
+			{ name: "Li Lyna Zhang" },
+			{ name: "Ning Shang" },
+			{ name: "Fan Yang" },
+			{ name: "Dongyao Chen" },
+			{ name: "Mao Yang" },
 		],
 	},
 	{
@@ -43,14 +50,14 @@ const publications = [
 		link: "https://arxiv.org/abs/2502.20082v1",
 		venue: "ICML 2025",
 		authors: [
-			"Ning Shang",
-			"Li Lyna Zhang",
-			"Siyuan Wang",
-			"Gaokai Zhang",
-			"Gilsinia Lopez",
-			"Fan Yang",
-			"Weizhu Chen",
-			"Mao Yang",
+			{ name: "Ning Shang", coFirst: true },
+			{ name: "Li Lyna Zhang", coFirst: true },
+			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Gaokai Zhang" },
+			{ name: "Gilsinia Lopez" },
+			{ name: "Fan Yang" },
+			{ name: "Weizhu Chen" },
+			{ name: "Mao Yang" },
 		],
 	},
 	{
@@ -58,17 +65,17 @@ const publications = [
 		link: "https://arxiv.org/abs/2511.11257",
 		venue: "Preprint",
 		authors: [
-			"Yuqi Yin",
-			"Yibo Fu",
-			"Siyuan Wang",
-			"Peng Sun",
-			"Hongyu Wang",
-			"Xiaohui Wang",
-			"Lei Zheng",
-			"Zhiyong Li",
-			"Zhirong Liu",
-			"Jianji Wang",
-			"Zhaoxi Sun",
+			{ name: "Yuqi Yin", coFirst: true },
+			{ name: "Yibo Fu", coFirst: true },
+			{ name: "Siyuan Wang", coFirst: true },
+			{ name: "Peng Sun" },
+			{ name: "Hongyu Wang" },
+			{ name: "Xiaohui Wang" },
+			{ name: "Lei Zheng" },
+			{ name: "Zhiyong Li" },
+			{ name: "Zhirong Liu" },
+			{ name: "Jianji Wang" },
+			{ name: "Zhaoxi Sun" },
 		],
 	},
 ];
@@ -90,9 +97,10 @@ const publications = [
 					</span>
 				</div>
 				<p class="text-sm leading-relaxed">
-					{pub.authors.map((name, idx) => (
+					{pub.authors.map((author, idx) => (
 						<>
-							{ name === highlightName ? <strong class="text-accent">{name}</strong> : name }
+							{author.name === highlightName ? <strong class="text-accent">{author.name}</strong> : author.name}
+							{author.coFirst ? "*" : ""}
 							{idx < pub.authors.length - 1 ? ", " : ""}
 						</>
 					))}
