@@ -49,12 +49,12 @@ export const menuLinks: { path: string; title: string }[] = [
 		title: "Notes",
 	},
 	{
-		path: "/credits/",
-		title: "Credits",
-	},
-	{
 		path: "/publications/",
 		title: "Publications",
+	},
+	{
+		path: "/credits/",
+		title: "Credits",
 	},
 ];
 

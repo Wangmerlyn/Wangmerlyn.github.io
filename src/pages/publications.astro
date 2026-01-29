@@ -100,7 +100,11 @@ const publications: {
 					{pub.authors.map((author, idx) => (
 						<>
 							{author.name === highlightName ? <strong class="text-accent">{author.name}</strong> : author.name}
-							{author.coFirst ? "*" : ""}
+							{author.coFirst ? (
+								<sup class="ms-0.5 align-super text-[10px] text-accent">*</sup>
+							) : (
+								""
+							)}
 							{idx < pub.authors.length - 1 ? ", " : ""}
 						</>
 					))}
