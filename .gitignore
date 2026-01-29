@@ -23,3 +23,8 @@ pnpm-debug.log*
 *.pem
 .cache
 .astro
+
+# local planning files (not project assets)
+findings.md
+task_plan.md
+progress.md

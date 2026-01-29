@@ -1,0 +1,46 @@
+---
+import { publications } from "@/data/publications";
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+	description: "Publications and preprints by Siyuan Wang.",
+	title: "Publications",
+};
+
+const highlightName = "Siyuan Wang";
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-10">Publications</h1>
+	<p class="mb-6 text-sm text-zinc-600 dark:text-zinc-300">
+		<abbr title="Co-first author" class="no-underline">*</abbr> denotes co-first authors.
+	</p>
+	<div class="prose prose-sm prose-cactus max-w-none space-y-8">
+		{publications.map((pub) => (
+			<article class="space-y-2">
+				<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+					<h2 class="text-lg font-semibold">
+						<a class="cactus-link" href={pub.link} rel="noopener noreferrer" target="_blank">
+							{pub.title}
+						</a>
+					</h2>
+					<span class="inline-flex max-w-fit items-center rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide whitespace-nowrap dark:border-zinc-500">
+						{pub.venue}
+					</span>
+				</div>
+				<p class="text-sm leading-relaxed">
+					{pub.authors.map((author, idx) => (
+						<>
+							{author.name === highlightName ? <strong class="text-accent">{author.name}</strong> : author.name}
+							{author.coFirst && (
+								<span aria-hidden="true" class="relative -top-1 ms-0.25 text-[10px] text-accent">*</span>
+							)}
+							{author.coFirst && <span class="sr-only"> (co-first author)</span>}
+							{idx < pub.authors.length - 1 ? ", " : ""}
+						</>
+					))}
+				</p>
+			</article>
+		))}
+	</div>
+</PageLayout>
