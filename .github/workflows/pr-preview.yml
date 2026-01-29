@@ -1,0 +1,74 @@
+name: pr-preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: pr-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  PREVIEW_PATH: pr/${{ github.event.pull_request.number }}
+  PREVIEW_URL: https://wangmerlyn.github.io/Wangmerlyn.github.io/pr/${{ github.event.pull_request.number }}/
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.1
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build with PR base path
+        run: pnpm build --base "/Wangmerlyn.github.io/${{ env.PREVIEW_PATH }}/"
+
+      - name: Add .nojekyll
+        run: touch dist/.nojekyll
+
+      - name: Deploy to gh-pages subfolder
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: dist
+          destination_dir: ${{ env.PREVIEW_PATH }}
+          keep_files: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "chore(preview): deploy PR #${{ github.event.pull_request.number }}"
+
+      - name: Comment with preview link
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const body = `📦 Preview deployed: [${process.env.PREVIEW_URL}](${process.env.PREVIEW_URL})`;
+            const { owner, repo, number } = context.issue;
+            const comments = await github.rest.issues.listComments({ owner, repo, issue_number: number });
+            const marker = "📦 Preview deployed:";
+            const existing = comments.data.find(c => c.user?.login === "github-actions[bot]" && c.body?.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
+            }
