@@ -71,9 +71,7 @@ const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 								)}
 								{author.coFirst && (
 									<>
-										<sup aria-hidden="true" class="ms-0.25 text-[10px] text-accent">
-											*
-										</sup>
+										<span aria-hidden="true" class="cofirst-star text-accent">*</span>
 										<span class="sr-only"> (co-first author)</span>
 									</>
 								)}

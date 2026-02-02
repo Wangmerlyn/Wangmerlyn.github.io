@@ -33,9 +33,7 @@ const highlightName = "Siyuan Wang";
 						<>
 							{author.name === highlightName ? <strong class="text-accent">{author.name}</strong> : author.name}
 							{author.coFirst && (
-								<sup aria-hidden="true" class="ms-0.5 text-[10px] text-accent">
-									*
-								</sup>
+								<span aria-hidden="true" class="cofirst-star text-accent">*</span>
 							)}
 							{author.coFirst && <span class="sr-only"> (co-first author)</span>}
 							{idx < pub.authors.length - 1 ? ", " : ""}
