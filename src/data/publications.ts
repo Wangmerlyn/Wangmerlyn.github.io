@@ -29,7 +29,7 @@ export const publications: Publication[] = [
 	{
 		title: "μTouch: Enabling Accurate, Lightweight Self-Touch Sensing with Passive Magnets",
 		link: "https://arxiv.org/abs/2601.22864",
-		venue: "Preprint",
+		venue: "PerCom 2026",
 		authors: [
 			{ name: "Siyuan Wang" },
 			{ name: "Ke Li" },
