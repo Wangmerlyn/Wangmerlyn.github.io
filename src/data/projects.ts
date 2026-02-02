@@ -47,6 +47,14 @@ export const projectCategories: ProjectCategory[] = [
 				description:
 					"Long-context evaluation and analysis: reproducible data synthesis, 128k LLaMA3-7B single‑GPU inference, and Phi3 retrieval-head support.",
 				tags: ["evaluation", "long context", "LLM"],
+				prs: [
+					{ label: "RULER fixes", url: "https://github.com/hsiehjackson/RULER" },
+					{ label: "InfiniteBench optimization", url: "https://github.com/OpenBMB/InfiniteBench" },
+					{
+						label: "Retrieval Head (Phi3 support)",
+						url: "https://github.com/nightdessert/Retrieval_Head",
+					},
+				],
 			},
 		],
 	},
@@ -65,6 +73,7 @@ export const projectCategories: ProjectCategory[] = [
 				title: "LLM‑MCTS Reasoning from Scratch",
 				role: "Lead & Algorithm Designer",
 				period: "Jan 2025",
+				link: "https://github.com/Wangmerlyn/MCTS-GSM8k-Demo",
 				description:
 					"Lightweight Monte‑Carlo Tree Search pipeline for LLM agents; supports OpenAI/DeepSeek APIs with optimized rollout policy.",
 				tags: ["LLM", "MCTS", "agents"],
