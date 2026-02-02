@@ -27,6 +27,20 @@ export const publications: Publication[] = [
 		],
 	},
 	{
+		title: "{mu}Touch: Enabling Accurate, Lightweight Self-Touch Sensing with Passive Magnets",
+		link: "https://arxiv.org/abs/2601.22864",
+		venue: "Preprint",
+		authors: [
+			{ name: "Siyuan Wang" },
+			{ name: "Ke Li" },
+			{ name: "Jingyuan Huang" },
+			{ name: "Jike Wang" },
+			{ name: "Cheng Zhang" },
+			{ name: "Alanson Sample" },
+			{ name: "Dongyao Chen" },
+		],
+	},
+	{
 		title: "LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts",
 		link: "https://arxiv.org/abs/2510.19363",
 		venue: "ICLR 2026",
