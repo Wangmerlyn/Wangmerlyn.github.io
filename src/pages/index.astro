@@ -1,6 +1,7 @@
 ---
-import { type CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
 import { getAllPosts } from "@/data/post";
 import { publications } from "@/data/publications";
@@ -18,6 +19,12 @@ const MAX_PINNED_POSTS = 3;
 const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
 
 // Notes
+const MAX_NOTES = 5;
+const allNotes = await getCollection("note", ({ data }) => !data.draft);
+const latestNotes = allNotes
+	.sort(collectionDateSort)
+	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
+
 // Publications preview
 const MAX_PUBLICATIONS_PREVIEW = 3;
 const highlightName = "Siyuan Wang";
@@ -111,4 +118,20 @@ const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 			)
 		}
 	</section>
+	{
+		latestNotes.length > 0 && (
+			<section class="mt-16">
+				<h2 class="title text-accent mb-6 text-xl">
+					<a href="/notes/">Notes</a>
+				</h2>
+				<ul class="space-y-6" role="list">
+					{latestNotes.map((note) => (
+						<li>
+							<Note note={note} as="h3" isPreview />
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
 </PageLayout>

@@ -7,6 +7,7 @@ tags: ["test", "markdown"]
 pinned: true
 footnotesSidebar: true
 tocSidebar: true
+draft: true
 ---
 
 ## This is a H2 Heading
