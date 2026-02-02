@@ -47,6 +47,22 @@ const meta = {
 							<p class="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
 								{item.description}
 							</p>
+							{item.prs && item.prs.length > 0 && (
+								<details class="mt-2 rounded border border-zinc-200/70 bg-zinc-50 px-3 py-2 text-sm dark:border-zinc-700/70 dark:bg-zinc-800/60">
+									<summary class="cursor-pointer font-semibold text-accent">
+										Pull Requests
+									</summary>
+									<ul class="mt-2 space-y-1" role="list">
+										{item.prs.map((pr) => (
+											<li>
+												<a class="cactus-link" href={pr.url} rel="noopener noreferrer" target="_blank">
+													{pr.label}
+												</a>
+											</li>
+										))}
+									</ul>
+								</details>
+							)}
 							{item.tags && item.tags.length > 0 && (
 								<ul class="mt-3 flex flex-wrap gap-2" role="list">
 									{item.tags.map((tag) => (

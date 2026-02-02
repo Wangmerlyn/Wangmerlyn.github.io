@@ -6,6 +6,7 @@ export type ProjectItem = {
 	link?: string;
 	description: string;
 	tags?: string[];
+	prs?: { label: string; url: string }[];
 };
 
 export type ProjectCategory = {
@@ -30,10 +31,14 @@ export const projectCategories: ProjectCategory[] = [
 				title: "VERL (Volcano Engine RL for LLMs)",
 				role: "Contributor",
 				period: "2025",
-				link: "https://github.com/volcengine/verl/pull/737",
 				description:
-					"Config fixes for extended context (YaRN); added tests and new “middle” truncation mode to keep head & tail context (PRs #737, #1488, #2462).",
+					"Extended-context fixes and truncation improvements for RL pipelines (YaRN), with tests across rollout workers.",
 				tags: ["RL", "long context", "tooling"],
+				prs: [
+					{ label: "PR #737", url: "https://github.com/volcengine/verl/pull/737" },
+					{ label: "PR #1488", url: "https://github.com/volcengine/verl/pull/1488" },
+					{ label: "PR #2462", url: "https://github.com/volcengine/verl/pull/2462" },
+				],
 			},
 			{
 				title: "RULER / InfiniteBench / Retrieval Head",
