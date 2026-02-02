@@ -32,22 +32,40 @@ const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-6">Siyuan Wang</h1>
-		<p class="mb-3 text-lg text-zinc-800 dark:text-zinc-100">
-			PhD student in Computer Science at Shanghai Jiao Tong University (advised by Prof. Dongyao Chen),
-			researching mobile sensing & human–computer interaction and long-context LLM reasoning.
-		</p>
-		<p class="mb-4 text-sm text-zinc-700 dark:text-zinc-200">
-			Previously at Microsoft Research Asia (LLM reasoning). Recent highlights: μTouch (PerCom 2026),
-			LoongRL (ICLR 2026), LongRoPE2 (ICML 2025), and a Kaggle silver medal (LMSYS Chatbot Arena).
-		</p>
-		<p class="mb-6 text-sm text-zinc-700 dark:text-zinc-200">
-			Open to collaborations on sensing-infused AI systems and long-context model efficiency. Reach me via
-			<a class="cactus-link ms-1" href="mailto:wsy0227@sjtu.edu.cn">email</a> or
-			<a class="cactus-link ms-1" href="https://www.linkedin.com/in/siyuanwang0227/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
-		</p>
-		<SocialList />
+	<section class="grid items-center gap-8 md:grid-cols-[1.15fr_0.85fr]">
+		<div>
+			<h1 class="title mb-6">Siyuan Wang (王思远)</h1>
+			<p class="mb-3 text-lg text-zinc-800 dark:text-zinc-100">
+				I'm a PhD student in Computer Science at Shanghai Jiao Tong University (advised by Prof. Dongyao Chen),
+				researching mobile sensing & human–computer interaction.
+			</p>
+			<p class="mb-4 text-sm text-zinc-700 dark:text-zinc-200">
+				During the summer of 2024, I interned at Microsoft Research Asia, working with Ning Shang and Dr. Li Lyna Zhang on long
+				context LLMs and LLM reasoning.
+			</p>
+			<p class="mb-6 text-sm text-zinc-700 dark:text-zinc-200">
+				Open to collaborations on sensing-infused AI systems and AI infrastructure. Reach me via
+				<a class="cactus-link ms-1" href="mailto:wsy0227@sjtu.edu.cn">email</a> or
+				<a class="cactus-link ms-1" href="https://www.linkedin.com/in/siyuanwang0227/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+			</p>
+			<SocialList />
+		</div>
+		<div class="relative mx-auto flex w-full max-w-sm items-center justify-center">
+			<div class="aspect-square w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-md dark:border-zinc-700">
+				<img
+					alt="Smiling cat"
+					class="block h-full w-full object-cover dark:hidden"
+					src="/images/light-cat.jpg"
+					loading="lazy"
+				/>
+				<img
+					alt="Portrait of Siyuan Wang"
+					class="hidden h-full w-full object-cover dark:block"
+					src="/images/dark-portrait.jpg"
+					loading="lazy"
+				/>
+			</div>
+		</div>
 	</section>
 	<section class="mt-16">
 		<div class="mb-4 flex items-baseline justify-between gap-3">
