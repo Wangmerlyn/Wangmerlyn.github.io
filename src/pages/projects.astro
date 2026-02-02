@@ -12,11 +12,11 @@ const meta = {
 	<h1 class="title mb-10">Projects & Open Source</h1>
 	<div class="prose prose-sm prose-cactus max-w-none space-y-10">
 		{projectCategories.map((category) => (
-			<section>
+			<section class="space-y-4">
 				<h2 class="text-lg font-semibold text-accent">{category.title}</h2>
-				<ul class="mt-4 space-y-4" role="list">
+				<div class="mt-2 space-y-4">
 					{category.items.map((item) => (
-						<li class="rounded-lg border border-zinc-200/70 p-4 shadow-sm dark:border-zinc-700/70">
+						<article class="rounded-lg border border-zinc-200/70 p-4 shadow-sm dark:border-zinc-700/70">
 							<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
 								<div class="flex items-baseline gap-2">
 									{item.link ? (
@@ -43,12 +43,12 @@ const meta = {
 										{item.org ? ` · ${item.org}` : ""}
 									</span>
 								)}
-							</div>
-							<p class="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
-								{item.description}
-							</p>
-							{item.prs && item.prs.length > 0 && (
-								<details class="mt-2 rounded border border-zinc-200/70 bg-zinc-50 px-3 py-2 text-sm dark:border-zinc-700/70 dark:bg-zinc-800/60">
+								</div>
+								<p class="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
+									{item.description}
+								</p>
+								{item.prs && item.prs.length > 0 && (
+									<details class="mt-2 rounded border border-zinc-200/70 bg-zinc-50 px-3 py-2 text-sm dark:border-zinc-700/70 dark:bg-zinc-800/60">
 									<summary class="cursor-pointer font-semibold text-accent">
 										Pull Requests
 									</summary>
@@ -63,18 +63,18 @@ const meta = {
 									</ul>
 								</details>
 							)}
-							{item.tags && item.tags.length > 0 && (
-								<ul class="mt-3 flex flex-wrap gap-2" role="list">
-									{item.tags.map((tag) => (
-										<li class="rounded-full border border-zinc-300 px-2 py-0.5 text-[11px] uppercase tracking-wide dark:border-zinc-600">
-											{tag}
-										</li>
-									))}
-								</ul>
-							)}
-						</li>
+								{item.tags && item.tags.length > 0 && (
+									<ul class="mt-3 flex flex-wrap gap-2" role="list">
+										{item.tags.map((tag) => (
+											<li class="rounded-full border border-zinc-300 px-2 py-0.5 text-[11px] uppercase tracking-wide dark:border-zinc-600">
+												{tag}
+											</li>
+										))}
+									</ul>
+								)}
+						</article>
 					))}
-				</ul>
+				</div>
 			</section>
 		))}
 	</div>
