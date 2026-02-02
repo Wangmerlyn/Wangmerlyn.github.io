@@ -27,7 +27,7 @@ export const publications: Publication[] = [
 		],
 	},
 	{
-		title: "{mu}Touch: Enabling Accurate, Lightweight Self-Touch Sensing with Passive Magnets",
+		title: "μTouch: Enabling Accurate, Lightweight Self-Touch Sensing with Passive Magnets",
 		link: "https://arxiv.org/abs/2601.22864",
 		venue: "Preprint",
 		authors: [
