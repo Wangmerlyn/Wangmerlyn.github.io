@@ -2,7 +2,8 @@
 import PageLayout from "@/layouts/Base.astro";
 
 const meta = {
-	description: "I'm a starter theme for Astro.build",
+	description:
+		"Siyuan Wang — PhD student at SJTU working on mobile sensing, HCI, and long-context LLMs.",
 	title: "About",
 };
 ---
@@ -10,27 +11,46 @@ const meta = {
 <PageLayout meta={meta}>
 	<h1 class="title mb-12">About</h1>
 	<div class="prose prose-sm prose-cactus max-w-none">
-		<p>
-			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
-			website.
+		<p class="text-base">
+			I’m Siyuan Wang (王思远), a PhD student in Computer Science at Shanghai Jiao Tong University, advised by
+			Prof. Dongyao Chen. I design systems at the intersection of <strong>mobile sensing & HCI</strong> and
+			<strong>long-context LLMs</strong>, aiming to make intelligent interactions more robust and practical.
 		</p>
-		<p>Here are my some of my awesome built in features:</p>
-		<ul class="list-inside list-disc" role="list">
-			<li>I'm ultra fast as I'm a static site</li>
-			<li>I'm fully responsive</li>
-			<li>I come with a light and dark mode</li>
-			<li>I'm easy to customise and add additional content</li>
-			<li>I have Tailwind CSS styling</li>
-			<li>Shiki code syntax highlighting</li>
-			<li>Satori for auto generating OG images for blog posts</li>
+
+		<h2>Work & Research</h2>
+		<ul>
+			<li>PhD Research — Mobile sensing + HCI: μTouch (PerCom 2026) explores passive magnetic self-touch sensing with semi-supervised gesture recognition.</li>
+			<li>Research Intern, Microsoft Research Asia — Long-context LLMs: LoongRL (ICLR 2026) and LongRoPE2 (ICML 2025) on reasoning and context scaling.</li>
 		</ul>
-		<p>
-			Clone or fork my <a
-				class="cactus-link inline-block"
-				href="https://github.com/chrismwilliams/astro-cactus"
-				rel="noreferrer"
-				target="_blank">repo</a
-			> if you like me!
-		</p>
+
+		<h2>Contact</h2>
+		<ul>
+			<li>
+				Email:
+				<a class="cactus-link" href="mailto:wsy0227@sjtu.edu.cn">wsy0227@sjtu.edu.cn</a>
+			</li>
+			<li>
+				LinkedIn:
+				<a
+					class="cactus-link"
+					href="https://www.linkedin.com/in/siyuanwang0227/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					linkedin.com/in/siyuanwang0227
+				</a>
+			</li>
+			<li>
+				GitHub:
+				<a
+					class="cactus-link"
+					href="https://github.com/Wangmerlyn"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					github.com/Wangmerlyn
+				</a>
+			</li>
+		</ul>
 	</div>
 </PageLayout>

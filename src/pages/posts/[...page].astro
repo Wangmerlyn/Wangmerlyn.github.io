@@ -1,10 +1,11 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import type { GetStaticPaths, Page } from "astro";
 import { Icon } from "astro-icon/components";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
 import Pagination from "@/components/Paginator.astro";
-import { getAllPosts, getUniqueTags, groupPostsByYear } from "@/data/post";
+import { getAllPosts, getUniqueTags } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
 
@@ -13,25 +14,33 @@ export const getStaticPaths = (async ({ paginate }) => {
 	const MAX_TAGS = 7;
 	const MAX_PINNED_POSTS = 3;
 	const allPosts = await getAllPosts();
+	const allNotes = await getCollection("note", ({ data }) => !data.draft);
 	const allPostsByDate = allPosts.sort(collectionDateSort);
+	const allNotesByDate = allNotes.sort(collectionDateSort);
+	const combinedEntries: CombinedEntry[] = [
+		...allPostsByDate.map((p) => ({ kind: "post", entry: p }) as const),
+		...allNotesByDate.map((n) => ({ kind: "note", entry: n }) as const),
+	].sort((a, b) => collectionDateSort(a.entry, b.entry));
 	const uniqueTags = getUniqueTags(allPosts).slice(0, MAX_TAGS);
 	const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PINNED_POSTS);
-	return paginate(allPostsByDate, {
+	return paginate(combinedEntries, {
 		pageSize: MAX_POSTS_PER_PAGE,
 		props: { uniqueTags, pinnedPosts },
 	});
 }) satisfies GetStaticPaths;
 
-interface Props {
-	page: Page<CollectionEntry<"post">>;
+type CombinedEntry =
+	| { kind: "post"; entry: CollectionEntry<"post"> }
+	| { kind: "note"; entry: CollectionEntry<"note"> };
+
+const { page, uniqueTags, pinnedPosts } = Astro.props as {
+	page: Page<CombinedEntry>;
 	uniqueTags: string[];
 	pinnedPosts: CollectionEntry<"post">[];
-}
-
-const { page, uniqueTags, pinnedPosts } = Astro.props;
+};
 
 const meta = {
-	description: "Read my collection of posts and the things that interest me",
+	description: "Read my collection of posts and notes on things that interest me",
 	title: "Posts",
 };
 
@@ -50,7 +59,16 @@ const paginationProps = {
 	}),
 };
 
-const groupedByYear = groupPostsByYear(page.data);
+const groupedByYear = page.data.reduce(
+	(acc, item) => {
+		const year = item.entry.data.publishDate.getFullYear().toString();
+		const bucket = acc[year] ?? [];
+		bucket.push(item);
+		acc[year] = bucket;
+		return acc;
+	},
+	{} as Record<string, CombinedEntry[]>,
+);
 const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 ---
 
@@ -86,9 +104,34 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 							{yearKey}
 						</h2>
 						<ul class="mt-5 space-y-4 text-start">
-							{groupedByYear[yearKey]?.map((p) => (
-								<li class="grid gap-1 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
-									<PostPreview post={p} />
+							{groupedByYear[yearKey]?.map((item) => (
+								<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
+									<FormattedDate
+										class="min-w-30 font-semibold text-gray-600 dark:text-gray-400"
+										date={item.entry.data.publishDate}
+									/>
+									<div class="flex flex-col gap-1">
+										<a
+											class="cactus-link"
+											href={
+												item.kind === "post"
+													? `/posts/${item.entry.id}/`
+													: `/notes/${item.entry.id}/`
+											}
+										>
+											{item.entry.data.title}
+										</a>
+										<div class="flex items-center gap-2 text-[11px] uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+											<span class="rounded-full border border-zinc-300 px-2 py-0.5 dark:border-zinc-600">
+												{item.kind === "post" ? "Post" : "Note"}
+											</span>
+											{item.kind === "post" && item.entry.data.tags?.length ? (
+												<span class="line-clamp-1">
+													{item.entry.data.tags.slice(0, 2).map((t) => `#${t}`).join(" ")}
+												</span>
+											) : null}
+										</div>
+									</div>
 								</li>
 							))}
 						</ul>

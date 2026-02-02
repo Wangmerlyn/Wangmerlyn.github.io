@@ -6,6 +6,7 @@ updatedDate: "28 Jan 2026"
 tags: ["test", "footnote", "layout"]
 footnotesSidebar: true
 tocSidebar: false
+draft: true
 ---
 
 This paragraph references a source for the first time.[^first] Scroll a bit more to see how the sidebar follows.

@@ -4,6 +4,7 @@ import PostPreview from "@/components/blog/PostPreview.astro";
 import Note from "@/components/note/Note.astro";
 import SocialList from "@/components/SocialList.astro";
 import { getAllPosts } from "@/data/post";
+import { publications } from "@/data/publications";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
 
@@ -19,21 +20,97 @@ const pinnedPosts = allPostsByDate.filter((p) => p.data.pinned).slice(0, MAX_PIN
 
 // Notes
 const MAX_NOTES = 5;
-const allNotes = await getCollection("note");
+const allNotes = await getCollection("note", ({ data }) => !data.draft);
 const latestNotes = allNotes
 	.sort(collectionDateSort)
 	.slice(0, MAX_NOTES) as CollectionEntry<"note">[];
+
+// Publications preview
+const MAX_PUBLICATIONS_PREVIEW = 3;
+const highlightName = "Siyuan Wang";
+const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-12">Hello World!</h1>
-		<p class="mb-4">
-			Hi, I’m a theme for Astro, a simple starter that you can use to create your website or blog.
-			If you want to know more about how you can customise me, add more posts, and make it your own,
-			click on the GitHub icon link below and it will take you to my repo.
+	<section class="grid items-center gap-8 md:grid-cols-[1.15fr_0.85fr]">
+		<div>
+			<h1 class="title mb-6">Siyuan Wang (王思远)</h1>
+			<p class="mb-3 text-lg text-zinc-800 dark:text-zinc-100">
+				I'm a PhD student in Computer Science at Shanghai Jiao Tong University (advised by Prof. Dongyao Chen),
+				researching mobile sensing & human–computer interaction.
+			</p>
+			<p class="mb-4 text-sm text-zinc-700 dark:text-zinc-200">
+				During the summer of 2024, I interned at Microsoft Research Asia, working with Ning Shang and Dr. Li Lyna Zhang on long
+				context LLMs and LLM reasoning.
+			</p>
+			<p class="mb-6 text-sm text-zinc-700 dark:text-zinc-200">
+				Open to collaborations on sensing-infused AI systems and AI infrastructure. Reach me via
+				<a class="cactus-link ms-1" href="mailto:wsy0227@sjtu.edu.cn">email</a> or
+				<a class="cactus-link ms-1" href="https://www.linkedin.com/in/siyuanwang0227/" target="_blank" rel="noopener noreferrer">LinkedIn</a>.
+			</p>
+			<SocialList />
+		</div>
+		<div class="relative mx-auto flex w-full max-w-[12rem] items-center justify-center sm:max-w-[14rem]">
+			<div class="aspect-square w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-md dark:border-zinc-700">
+				<img
+					alt="Smiling cat"
+					class="block h-full w-full object-cover dark:hidden"
+					src="/images/light-cat.jpg"
+					loading="lazy"
+				/>
+				<img
+					alt="Portrait of Siyuan Wang"
+					class="hidden h-full w-full object-cover dark:block"
+					src="/images/dark-portrait.png"
+					loading="lazy"
+				/>
+			</div>
+		</div>
+	</section>
+	<section class="mt-16">
+		<div class="mb-4 flex items-baseline justify-between gap-3">
+			<h2 class="title text-accent mb-0 text-xl">
+				<a href="/publications/">Publications</a>
+			</h2>
+			<span class="text-xs text-zinc-600 dark:text-zinc-300">* co-first author</span>
+		</div>
+		<ul class="space-y-4" role="list">
+			{publicationsPreview.map((pub) => (
+				<li class="space-y-1 rounded-lg border border-zinc-200/70 p-4 dark:border-zinc-700/70">
+					<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+						<h3 class="text-base font-semibold leading-snug">
+							<a class="cactus-link" href={pub.link} rel="noopener noreferrer" target="_blank">
+								{pub.title}
+							</a>
+						</h3>
+						<span class="inline-flex max-w-fit items-center whitespace-nowrap rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide dark:border-zinc-500">
+							{pub.venue}
+						</span>
+					</div>
+					<p class="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+						{pub.authors.map((author, idx) => (
+							<>
+								{author.name === highlightName ? (
+									<strong class="text-accent">{author.name}</strong>
+								) : (
+									author.name
+								)}
+								{author.coFirst && (
+									<>
+										<span aria-hidden="true" class="cofirst-star text-accent">*</span>
+										<span class="sr-only"> (co-first author)</span>
+									</>
+								)}
+								{idx < pub.authors.length - 1 ? ", " : ""}
+							</>
+						))}
+					</p>
+				</li>
+			))}
+		</ul>
+		<p class="mt-4 text-sm">
+			<a class="cactus-link" href="/publications/">View all publications →</a>
 		</p>
-		<SocialList />
 	</section>
 	{
 		pinnedPosts.length > 0 && (
@@ -49,18 +126,20 @@ const latestNotes = allNotes
 			</section>
 		)
 	}
-	<section class="mt-16">
-		<h2 class="title text-accent mb-6 text-xl"><a href="/posts/">Posts</a></h2>
-		<ul class="space-y-4" role="list">
-			{
-				latestPosts.map((p) => (
+	{latestPosts.length > 0 && (
+		<section class="mt-16">
+			<h2 class="title text-accent mb-6 text-xl">
+				<a href="/posts/">Posts</a>
+			</h2>
+			<ul class="space-y-4" role="list">
+				{latestPosts.map((p) => (
 					<li class="grid gap-1 sm:grid-cols-[auto_1fr]">
 						<PostPreview post={p} />
 					</li>
-				))
-			}
-		</ul>
-	</section>
+				))}
+			</ul>
+		</section>
+	)}
 	{
 		latestNotes.length > 0 && (
 			<section class="mt-16">
