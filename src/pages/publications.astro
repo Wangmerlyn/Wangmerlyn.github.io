@@ -29,7 +29,7 @@ const highlightName = "Siyuan Wang";
 							{pub.venue}
 						</span>
 						{pub.badges?.map((badge) => (
-							<span class="pub-badge pub-badge--oral">{badge}</span>
+							<span class={`pub-badge pub-badge--${badge.toLowerCase()}`}>{badge}</span>
 						))}
 					</div>
 				</div>

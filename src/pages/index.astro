@@ -88,7 +88,7 @@ const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 								{pub.venue}
 							</span>
 							{pub.badges?.map((badge) => (
-								<span class="pub-badge pub-badge--oral">{badge}</span>
+								<span class={`pub-badge pub-badge--${badge.toLowerCase()}`}>{badge}</span>
 							))}
 						</div>
 					</div>
