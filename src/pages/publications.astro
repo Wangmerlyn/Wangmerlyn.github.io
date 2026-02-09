@@ -24,9 +24,14 @@ const highlightName = "Siyuan Wang";
 							{pub.title}
 						</a>
 					</h2>
-					<span class="inline-flex max-w-fit items-center rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide whitespace-nowrap dark:border-zinc-500">
-						{pub.venue}
-					</span>
+					<div class="flex flex-wrap items-center gap-2">
+						<span class="inline-flex max-w-fit items-center rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide whitespace-nowrap dark:border-zinc-500">
+							{pub.venue}
+						</span>
+						{pub.badges?.map((badge) => (
+							<span class={`pub-badge pub-badge--${badge.toLowerCase()}`}>{badge}</span>
+						))}
+					</div>
 				</div>
 				<p class="text-sm leading-relaxed">
 					{pub.authors.map((author, idx) => (

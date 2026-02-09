@@ -7,6 +7,7 @@ export type Publication = {
 	title: string;
 	link: string;
 	venue: string;
+	badges?: string[];
 	authors: Author[];
 };
 
@@ -29,6 +30,7 @@ export const publications: Publication[] = [
 		title: "LoongRL: Reinforcement Learning for Advanced Reasoning over Long Contexts",
 		link: "https://arxiv.org/abs/2510.19363",
 		venue: "ICLR 2026",
+		badges: ["ORAL"],
 		authors: [
 			{ name: "Siyuan Wang", coFirst: true },
 			{ name: "Gaokai Zhang", coFirst: true },

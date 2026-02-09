@@ -83,9 +83,14 @@ const publicationsPreview = publications.slice(0, MAX_PUBLICATIONS_PREVIEW);
 								{pub.title}
 							</a>
 						</h3>
-						<span class="inline-flex max-w-fit items-center whitespace-nowrap rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide dark:border-zinc-500">
-							{pub.venue}
-						</span>
+						<div class="flex flex-wrap items-center gap-2">
+							<span class="inline-flex max-w-fit items-center whitespace-nowrap rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide dark:border-zinc-500">
+								{pub.venue}
+							</span>
+							{pub.badges?.map((badge) => (
+								<span class={`pub-badge pub-badge--${badge.toLowerCase()}`}>{badge}</span>
+							))}
+						</div>
 					</div>
 					<p class="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
 						{pub.authors.map((author, idx) => (
