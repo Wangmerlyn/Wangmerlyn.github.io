@@ -5,12 +5,12 @@ The current Projects page lists "Open Source Contributions" before "Competitions
 
 ## Goal
 1. Show "Competitions & Demos" above "Open Source Contributions".
-2. Add a KeepGPU entry in Open Source with accurate, concise content.
+2. Add a KeepGPU entry in Competitions & Demos with accurate, concise content.
 3. Keep page structure and styling unchanged.
 
 ## Solution
 - Update `src/data/projects.ts` ordering in `projectCategories`.
-- Insert a new `ProjectItem` for KeepGPU under Open Source.
+- Insert a new `ProjectItem` for KeepGPU under Competitions & Demos.
 - Use GitHub metadata (`description`, repo URL, language/license context) for truthful copy.
 
 ## Todo
