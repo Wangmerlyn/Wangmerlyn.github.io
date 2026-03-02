@@ -31,6 +31,7 @@ export const projectCategories: ProjectCategory[] = [
 				title: "Kaggle LMSYS – Chatbot Arena Preference Prediction",
 				role: "Team Lead & Algorithm Designer",
 				period: "Aug 2024",
+				link: "https://www.kaggle.com/competitions/lmsys-chatbot-arena",
 				description:
 					"Built LoRA‑fine‑tuned models with pseudo‑labeling and ensembles; earned Silver Medal (39/1,849 teams).",
 				tags: ["Kaggle", "preference modeling", "LoRA"],
