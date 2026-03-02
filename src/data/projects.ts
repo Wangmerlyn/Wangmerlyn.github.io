@@ -19,6 +19,15 @@ export const projectCategories: ProjectCategory[] = [
 		title: "Competitions & Demos",
 		items: [
 			{
+				title: "KeepGPU",
+				role: "Maintainer",
+				period: "2025-2026",
+				link: "https://github.com/Wangmerlyn/KeepGPU",
+				description:
+					"Built and maintain a Python CLI tool that keeps shared GPUs active with lightweight keep-alive workloads, plus a matching Python API.",
+				tags: ["python", "GPU tooling", "CLI"],
+			},
+			{
 				title: "Kaggle LMSYS – Chatbot Arena Preference Prediction",
 				role: "Team Lead & Algorithm Designer",
 				period: "Aug 2024",
@@ -49,15 +58,6 @@ export const projectCategories: ProjectCategory[] = [
 	{
 		title: "Open Source Contributions",
 		items: [
-			{
-				title: "KeepGPU",
-				role: "Maintainer",
-				period: "2025-2026",
-				link: "https://github.com/Wangmerlyn/KeepGPU",
-				description:
-					"Built and maintain a Python CLI tool that keeps shared GPUs active with lightweight keep-alive workloads, plus a matching Python API.",
-				tags: ["python", "GPU tooling", "CLI"],
-			},
 			{
 				title: "vLLM",
 				role: "Contributor",
