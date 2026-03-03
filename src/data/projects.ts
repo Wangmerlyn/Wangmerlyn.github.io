@@ -16,7 +16,7 @@ export type ProjectCategory = {
 
 export const projectCategories: ProjectCategory[] = [
 	{
-		title: "Competitions & Demos",
+		title: "Projects & Competitions",
 		items: [
 			{
 				title: "KeepGPU",
