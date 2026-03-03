@@ -60,6 +60,29 @@ export const projectCategories: ProjectCategory[] = [
 		title: "Open Source Contributions",
 		items: [
 			{
+				title: "OpenHands software-agent-sdk",
+				role: "Contributor",
+				period: "2025-2026",
+				link: "https://github.com/OpenHands/software-agent-sdk",
+				description:
+					"Contributed SDK improvements for model naming compatibility, log tooling, and message/image serialization in Responses workflows.",
+				tags: ["agent sdk", "tooling", "python"],
+				prs: [
+					{
+						label: "PR #1895 · Responses tool image serialization",
+						url: "https://github.com/OpenHands/software-agent-sdk/pull/1895",
+					},
+					{
+						label: "PR #1292 · canonical model_real_name handling",
+						url: "https://github.com/OpenHands/software-agent-sdk/pull/1292",
+					},
+					{
+						label: "PR #1284 · Streamlit completion-log viewer",
+						url: "https://github.com/OpenHands/software-agent-sdk/pull/1284",
+					},
+				],
+			},
+			{
 				title: "vLLM",
 				role: "Contributor",
 				period: "2025",
