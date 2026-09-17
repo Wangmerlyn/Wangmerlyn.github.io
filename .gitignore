@@ -25,9 +25,9 @@ pnpm-debug.log*
 .astro
 
 # local planning files (not project assets)
-/findings.md
-/task_plan.md
-/progress.md
+findings.md
+task_plan.md
+progress.md
 
 # linked worktrees
 /.worktrees/
