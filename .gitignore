@@ -28,3 +28,6 @@ pnpm-debug.log*
 findings.md
 task_plan.md
 progress.md
+
+# linked worktrees
+/.worktrees/
