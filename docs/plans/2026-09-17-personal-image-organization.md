@@ -17,6 +17,7 @@
 - Do not add exact duplicates already present in public/images/.
 - Do not add resized or near-duplicate Marshall derivatives when a higher-quality canonical remains.
 - Keep homepage behavior unchanged except for the corrected path to the renamed portrait.
+- Remove EXIF metadata from published JPEGs while preserving their encoded pixel frames.
 - Do not update README for this one-off import; existing /public asset guidance is sufficient.
 
 ---
@@ -27,7 +28,7 @@
 
 **Interfaces:** Consumes the approved cleanup design and upload inventory; produces an auditable retained/discarded mapping.
 
-- [ ] Step 1: Record canonical filenames and duplicate decisions.
+- [x] Step 1: Record canonical filenames and duplicate decisions.
 
 Retain these files under public/images/:
 
@@ -43,7 +44,7 @@ marshall-dj-wide-poster.png     <- a645042989aae57f02f2e18545d99c98 (3).png
 
 Discard the incoming cat and dark-portrait.png exact duplicates, the WechatIMG44.jpg crop duplicate, posterized portrait (2), alternate posterized wide (4), and resized wide derivatives (5), (6), and profile.png.
 
-- [ ] Step 2: Record verification commands.
+- [x] Step 2: Record verification commands.
 
 Run from the worktree:
 
@@ -53,9 +54,10 @@ file public/images/*
 pnpm check
 pnpm build
 for image in cat-avatar.jpg siyuan-wang-portrait-bw.jpg hooded-portrait-bw.jpg beach-group-2025.jpg marshall-dj-wide.png marshall-dj-portrait.png marshall-dj-wide-poster.png; do test -f "dist/images/$image"; done
+for image in public/images/*.jpg; do ! file "$image" | grep -q Exif; done
 ~~~
 
-- [ ] Step 3: Commit the plan.
+- [x] Step 3: Commit the plan.
 
 ~~~bash
 git add docs/plans/2026-09-17-personal-image-organization.md
@@ -68,16 +70,16 @@ git commit -m "docs(images): plan personal asset cleanup"
 
 **Interfaces:** Consumes existing public asset URLs; produces truthful semantic names with equivalent homepage rendering.
 
-- [ ] Step 1: Rename the tracked files.
+- [x] Step 1: Rename the tracked files.
 
 ~~~bash
 mv public/images/light-cat.jpg public/images/cat-avatar.jpg
 mv public/images/dark-portrait.png public/images/siyuan-wang-portrait-bw.jpg
 ~~~
 
-- [ ] Step 2: Update only the dark-mode src value. Change /images/dark-portrait.png to /images/siyuan-wang-portrait-bw.jpg in src/pages/index.astro; keep alt text and loading behavior unchanged.
+- [x] Step 2: Update both homepage image paths. Change /images/light-cat.jpg to /images/cat-avatar.jpg and /images/dark-portrait.png to /images/siyuan-wang-portrait-bw.jpg in src/pages/index.astro; keep alt text and loading behavior unchanged.
 
-- [ ] Step 3: Check and commit the rename.
+- [x] Step 3: Check and commit the rename.
 
 ~~~bash
 git diff --check
@@ -91,7 +93,7 @@ git commit -m "refactor(images): normalize homepage asset names"
 
 **Interfaces:** Consumes the five selected source files in /home/wsy0227/bulk_upload_images_for_codex; produces reusable public assets without source filename artifacts or low-quality derivatives.
 
-- [ ] Step 1: Copy the selected source files.
+- [x] Step 1: Copy the selected source files.
 
 ~~~bash
 cp /home/wsy0227/bulk_upload_images_for_codex/32165022c15cbab73a0e03cdfaf70819.jpg public/images/hooded-portrait-bw.jpg
@@ -101,9 +103,9 @@ cp "/home/wsy0227/bulk_upload_images_for_codex/a645042989aae57f02f2e18545d99c98 
 cp "/home/wsy0227/bulk_upload_images_for_codex/a645042989aae57f02f2e18545d99c98 (3).png" public/images/marshall-dj-wide-poster.png
 ~~~
 
-- [ ] Step 2: Verify formats and dimensions. file must report JPEG for the two JPEGs and PNG for the three PNGs; dimensions must be 744x992, 7872x2912, 1752x1168, 1920x2212, and 7008x4672 respectively.
+- [x] Step 2: Verify formats, dimensions, and JPEG metadata. file reports JPEG for the two new JPEGs and PNG for the three PNGs; dimensions are 744x992, 7872x2912, 1752x1168, 1920x2212, and 7008x4672 respectively. EXIF APP1 segments were removed from all published JPEGs and ffmpeg frame hashes match the original source frames.
 
-- [ ] Step 3: Commit the curated assets.
+- [x] Step 3: Commit the curated assets.
 
 ~~~bash
 git add public/images
@@ -116,13 +118,13 @@ git commit -m "feat(images): add curated personal assets"
 
 **Interfaces:** Consumes the normalized and curated asset set; produces a verified branch, pushed PR, and reviewer feedback.
 
-- [ ] Step 1: Install dependencies if needed.
+- [x] Step 1: Install dependencies if needed.
 
 ~~~bash
 if [ ! -d node_modules ]; then pnpm install --frozen-lockfile; fi
 ~~~
 
-- [ ] Step 2: Run validation.
+- [x] Step 2: Run validation.
 
 ~~~bash
 git diff --check
@@ -131,7 +133,7 @@ pnpm build
 for image in cat-avatar.jpg siyuan-wang-portrait-bw.jpg hooded-portrait-bw.jpg beach-group-2025.jpg marshall-dj-wide.png marshall-dj-portrait.png marshall-dj-wide-poster.png; do test -f "dist/images/$image"; done
 ~~~
 
-- [ ] Step 3: Review the final branch.
+- [x] Step 3: Review the final branch.
 
 ~~~bash
 git status --short --branch
@@ -139,6 +141,6 @@ git diff origin/main...HEAD --stat
 git log --oneline origin/main..HEAD
 ~~~
 
-- [ ] Step 4: Push and open the PR with title [images] feat: organize personal assets, listing retained assets, duplicate-removal rationale, validation results, and why README was unchanged.
+- [x] Step 4: Push and open the PR with title [images] feat: organize personal assets, listing retained assets, duplicate-removal rationale, validation results, and why README was unchanged.
 
 - [ ] Step 5: Dispatch two independent reviewers. Address Critical or Important findings, rerun validation, and update the PR before handoff.
