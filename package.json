@@ -9,6 +9,7 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"postbuild": "pagefind --site dist",
+		"build:slides": "node scripts/build-slides.mjs",
 		"preview": "astro preview",
 		"check": "astro check && biome check",
 		"lint": "biome check --write",

@@ -20,5 +20,6 @@ if ! command -v pnpm >/dev/null 2>&1; then
 fi
 
 pnpm install
+pnpm --dir slides install
 
 echo "Setup complete. pnpm v${PNPM_VERSION} activated and dependencies installed."

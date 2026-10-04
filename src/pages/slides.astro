@@ -1,0 +1,48 @@
+---
+import FormattedDate from "@/components/FormattedDate.astro";
+import { slides } from "@/data/slides";
+import PageLayout from "@/layouts/Base.astro";
+
+const meta = {
+	description: "Talks and Slidev decks by Siyuan Wang.",
+	title: "Slides",
+};
+
+const decks = [...slides].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<PageLayout meta={meta}>
+	<h1 class="title mb-10">Slides</h1>
+	<p class="mb-6 text-sm text-zinc-600 dark:text-zinc-300">
+		Talks written in Slidev. Open a deck to view the slides.
+	</p>
+	<div class="prose prose-sm prose-cactus max-w-none space-y-4">
+		{
+			decks.map((deck) => (
+				<article class="rounded-lg border border-zinc-200/70 p-4 shadow-sm dark:border-zinc-700/70">
+					<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+						<h2 class="text-lg font-semibold">
+							<a class="cactus-link" href={`/slides/${deck.slug}/`}>
+								{deck.title}
+							</a>
+						</h2>
+						<div class="flex flex-wrap items-center gap-2">
+							<FormattedDate
+								class="text-xs uppercase tracking-wide text-zinc-600 dark:text-zinc-300"
+								date={new Date(`${deck.date}T12:00:00`)}
+							/>
+							{deck.venue && (
+								<span class="inline-flex max-w-fit items-center rounded-full border border-zinc-400 px-3 py-1 text-xs uppercase tracking-wide whitespace-nowrap dark:border-zinc-500">
+									{deck.venue}
+								</span>
+							)}
+						</div>
+					</div>
+					<p class="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-200">
+						{deck.description}
+					</p>
+				</article>
+			))
+		}
+	</div>
+</PageLayout>
