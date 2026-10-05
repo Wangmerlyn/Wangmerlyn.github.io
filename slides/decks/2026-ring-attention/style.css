@@ -1,0 +1,60 @@
+@import "./styles/fonts.css";
+
+.slidev-layout,
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout p,
+.slidev-layout li,
+.slidev-layout div {
+	font-family:
+		"JetBrains Mono",
+		"JetBrainsMono NF",
+		"JetBrainsMono Nerd Font",
+		"Noto Sans Mono CJK SC",
+		ui-monospace,
+		monospace !important;
+	font-variant-ligatures: common-ligatures;
+	font-feature-settings: "liga" 1, "calt" 1;
+}
+
+.slidev-layout,
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout p,
+.slidev-layout div,
+.slidev-layout * {
+	user-select: text;
+}
+
+.slidev-layout h1 {
+	letter-spacing: -0.04em;
+}
+
+.slidev-layout h1 + p {
+	opacity: 1 !important;
+}
+
+.slidev-layout.ring-demo-slide {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	padding: 10px 14px !important;
+}
+
+.slidev-layout.ring-demo-slide > .ring-demo,
+.slidev-layout.ring-demo-slide > .softmax-demo {
+	flex: 1;
+	min-height: 0;
+}
+
+@media screen {
+	#slide-container > #slide-content.slidev-slide-content {
+		width: var(--slidev-fit-w, 980px) !important;
+		height: var(--slidev-fit-h, 552px) !important;
+		transform: translate(-50%, -50%) scale(var(--slidev-fit-s, var(--slidev-slide-scale))) !important;
+	}
+}

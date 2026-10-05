@@ -29,9 +29,15 @@ jobs:
         with:
           node-version: 22
           cache: "pnpm"
+          cache-dependency-path: |
+            pnpm-lock.yaml
+            slides/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Install Slidev dependencies
+        run: pnpm --dir slides install --frozen-lockfile
 
         # use astro check for issues
       - name: Run Astro check
@@ -40,3 +46,6 @@ jobs:
         # ensure build works
       - name: Run Astro build
         run: pnpm build
+
+      - name: Build Slidev decks
+        run: pnpm build:slides

@@ -1,0 +1,21 @@
+{
+	"name": "personal-slides",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "slidev",
+		"slidev": "slidev"
+	},
+	"devDependencies": {
+		"@slidev/cli": "^53.0.0",
+		"@slidev/theme-apple-basic": "^0.25.1",
+		"@slidev/theme-default": "^0.25.0",
+		"markdown-it": "^14.1.0",
+		"vue": "^3.5.22"
+	},
+	"pnpm": {
+		"overrides": {
+			"markdown-it": "^14.1.0"
+		}
+	}
+}

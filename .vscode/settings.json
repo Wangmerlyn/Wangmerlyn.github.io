@@ -18,5 +18,9 @@
 	"files.associations": {
 		"*.css": "tailwindcss"
 	},
-	"tailwindCSS.experimental.configFile": "./src/styles/global.css"
+	"tailwindCSS.experimental.configFile": "./src/styles/global.css",
+	"slidev.include": [
+		"**/slides.md",
+		"slides/decks/2026-ring-attention/ring-attention.md"
+	]
 }
