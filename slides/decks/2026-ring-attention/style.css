@@ -45,6 +45,7 @@
 	padding: 10px 14px !important;
 }
 
+.slidev-layout.ring-demo-slide > .ring-demo,
 .slidev-layout.ring-demo-slide > .softmax-demo {
 	flex: 1;
 	min-height: 0;
