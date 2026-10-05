@@ -135,6 +135,18 @@ $$
 - 如此循环，直到每一个GPU上的 $Q_i$ 都见到了所有的 $K_i, V_i$
 
 ---
+
+# 完整交互动画
+
+<script setup lang="ts">
+import IllustCard from "./components/IllustrationLinkCard.vue";
+</script>
+
+后面几页是精简过的slides版。想跟一遍环形传递和 online softmax，将军请走此小道：
+
+<IllustCard />
+
+---
 class: ring-demo-slide
 ---
 
