@@ -8,14 +8,14 @@ export type SlideDeck = {
 
 export const slides: SlideDeck[] = [
 	{
-		slug: "2026-ring-attention",
+		slug: "2026-10-04-ring-attention",
 		title: "Ring Attention",
 		date: "2026-10-04",
 		venue: "NiubAI",
 		description: "Ring Attention with blockwise Transformers for near-infinite context.",
 	},
 	{
-		slug: "2026-hello-slidev",
+		slug: "2026-10-03-hello-slidev",
 		title: "Hello Slidev",
 		date: "2026-10-03",
 		venue: "Site template",

@@ -25,9 +25,9 @@ pnpm preview
 
 ## Add a talk
 
-1. Copy `slides/decks/_template` to `slides/decks/YYYY-short-slug`.
+1. Copy `slides/decks/_template` to `slides/decks/YYYY-MM-DD-short-slug`.
 2. Edit that folder's `slides.md` (or another `.md` entry such as `<slug>.md`), plus optional `public/` or `components/`.
-3. Append an entry to `src/data/slides.ts` with the same `slug`.
+3. Append an entry to `src/data/slides.ts` with the same `slug`. The listing date still comes from the `date` field; keep it aligned with the folder prefix.
 4. Open a PR to `main`. CI builds the site, then each deck, then deploys.
 
 Folders starting with `_` are skipped by the build script.
