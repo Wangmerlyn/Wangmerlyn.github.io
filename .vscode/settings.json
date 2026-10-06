@@ -21,6 +21,6 @@
 	"tailwindCSS.experimental.configFile": "./src/styles/global.css",
 	"slidev.include": [
 		"**/slides.md",
-		"slides/decks/2026-ring-attention/ring-attention.md"
+		"slides/decks/2026-10-04-ring-attention/ring-attention.md"
 	]
 }
