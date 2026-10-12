@@ -1,0 +1,58 @@
+/*
+ * apple-basic sets select-none on most slide text (see theme layout.css).
+ * Headmatter selectable: true only clears Slidev's wrapper; override theme here.
+ */
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4,
+.slidev-layout p,
+.slidev-layout li,
+.slidev-layout div {
+	user-select: text;
+}
+
+.slidev-layout a.diagram-source {
+	display: inline-block;
+	margin-top: 0.2em;
+	color: #0071e3;
+	font-size: 11px;
+	font-weight: 650;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+.slidev-layout a.diagram-source:hover {
+	text-decoration: underline;
+}
+
+/*
+ * Tall slides: scroll inside the slide canvas (not 100dvh — that breaks under
+ * Slidev’s scaled #slide-content). Do NOT set display on .slidev-page.
+ */
+.slidev-page {
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+.slidev-page .slidev-layout {
+	box-sizing: border-box;
+	max-height: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	overscroll-behavior-y: contain;
+	touch-action: pan-y;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: #c7c7cc transparent;
+}
+
+.slidev-page .slidev-layout::-webkit-scrollbar {
+	width: 6px;
+}
+
+.slidev-page .slidev-layout::-webkit-scrollbar-thumb {
+	background: #c7c7cc;
+	border-radius: 999px;
+}

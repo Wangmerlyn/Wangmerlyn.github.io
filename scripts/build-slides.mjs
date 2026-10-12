@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,6 +38,18 @@ function listDecks() {
 		.map((entry) => entry.name)
 		.filter((slug) => entryMarkdown(slug))
 		.sort();
+}
+
+/** Copy deck-local static assets (e.g. mogodb/) beside the built SPA. */
+function copyDeckStaticAssets(slug, outDir) {
+	const staticDir = join(decksDir, slug, "mogodb");
+	if (!existsSync(staticDir)) {
+		return;
+	}
+
+	const dest = join(outDir, "mogodb");
+	cpSync(staticDir, dest, { recursive: true });
+	console.log(`Copied static mogodb/ -> /slides/${slug}/mogodb/`);
 }
 
 function markPagefindIgnore(outDir) {
@@ -95,5 +107,6 @@ for (const slug of decks) {
 	const outDir = join(distSlidesDir, slug);
 	console.log(`Building ${slug} -> /slides/${slug}/`);
 	run([entry, "--base", `/slides/${slug}/`, "--out", outDir, "--router-mode", "hash"]);
+	copyDeckStaticAssets(slug, outDir);
 	markPagefindIgnore(outDir);
 }
