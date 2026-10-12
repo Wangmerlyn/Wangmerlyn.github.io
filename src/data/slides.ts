@@ -8,6 +8,13 @@ export type SlideDeck = {
 
 export const slides: SlideDeck[] = [
 	{
+		slug: "2026-10-12-ctf-and-cybersecurity-competition",
+		title: "CTF and Cybersecurity Competition",
+		date: "2026-10-12",
+		description:
+			"OpenAI Hugging Face incident, CTF tracks (Web, PWN, Reverse, OSINT), and interactive demos including HSCTF mogodb.",
+	},
+	{
 		slug: "2026-10-04-ring-attention",
 		title: "Ring Attention",
 		date: "2026-10-04",
