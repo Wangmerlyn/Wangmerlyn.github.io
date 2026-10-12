@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>mogodb · HSCTF 10 replica</title>
+	<style>
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			min-height: 100vh;
+			display: grid;
+			place-items: center;
+			padding: 24px;
+			font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+			background: #f5f5f7;
+			color: #1d1d1f;
+		}
+		.shell {
+			width: min(420px, 100%);
+			border: 1px solid #222;
+			background: #fff;
+			box-shadow: 0 8px 24px rgba(0,0,0,.08);
+		}
+		.chrome {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			padding: 8px 10px;
+			border-bottom: 1px solid #d2d2d7;
+			background: #f5f5f7;
+			font-size: 11px;
+			color: #555;
+		}
+		.viewport { padding: 16px 18px 18px; }
+		h1 { margin: 0; font-size: 1.5rem; text-align: center; }
+		h2 { margin: 0; font-size: 1.25rem; text-align: center; }
+		.tagline { text-align: center; color: #555; font-size: 0.95rem; }
+		.error {
+			margin: 10px 0 0;
+			padding: 8px;
+			border: 1px solid #b42318;
+			background: #fef3f2;
+			color: #b42318;
+			font-size: 0.85rem;
+		}
+		form { margin-top: 12px; padding-top: 12px; border-top: 1px solid #e8e8ed; text-align: left; }
+		form.secondary { border-top-style: dashed; }
+		form h3 { margin: 0 0 8px; font-size: 0.95rem; }
+		label { display: grid; gap: 4px; margin-bottom: 8px; font-size: 0.85rem; color: #555; }
+		input {
+			padding: 6px 8px;
+			border: 1px solid #86868b;
+			border-radius: 4px;
+			font-family: ui-monospace, monospace;
+			font-size: 0.9rem;
+		}
+		button {
+			padding: 6px 12px;
+			border: 1px solid #222;
+			border-radius: 4px;
+			background: #f5f5f7;
+			font-weight: 600;
+			cursor: pointer;
+		}
+		.query {
+			margin-top: 12px;
+			padding: 8px;
+			border: 1px solid #0071e3;
+			background: #f7fbff;
+			font-size: 0.8rem;
+			text-align: left;
+			word-break: break-all;
+		}
+		.welcome { text-align: center; font-size: 1.1rem; font-weight: 650; margin-top: 8px; }
+		.flag {
+			margin-top: 12px;
+			padding: 10px;
+			border: 1px solid #0071e3;
+			background: #e8f2fc;
+			font-family: ui-monospace, monospace;
+			font-weight: 650;
+			text-align: center;
+		}
+		.foot { margin-top: 14px; font-size: 0.7rem; color: #86868b; text-align: center; }
+		.hidden { display: none; }
+	</style>
+</head>
+<body>
+	<div class="shell">
+		<div class="chrome">mogodb.hsctf.com (local replica)</div>
+		<div class="viewport" id="app"></div>
+	</div>
+	<script type="module" src="./app.js"></script>
+</body>
+</html>
