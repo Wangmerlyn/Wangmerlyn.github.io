@@ -17,9 +17,7 @@ themeConfig:
     primary: "#0071e3"
 defaults:
     transition: slide-up
----
 
----
 layout: statement
 ---
 
