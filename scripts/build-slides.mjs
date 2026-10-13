@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { cpSync, existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const rootDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -38,6 +38,27 @@ function listDecks() {
 		.map((entry) => entry.name)
 		.filter((slug) => entryMarkdown(slug))
 		.sort();
+}
+
+const DECK_MEDIA_EXT = new Set([".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"]);
+
+/** Copy deck-root images referenced via ./ paths in Vue props (not Vite-imported). */
+function copyDeckRootMedia(slug, outDir) {
+	const deckDir = join(decksDir, slug);
+	let copied = 0;
+
+	for (const name of readdirSync(deckDir)) {
+		const filePath = join(deckDir, name);
+		if (!statSync(filePath).isFile())
+			continue;
+		if (!DECK_MEDIA_EXT.has(extname(name).toLowerCase()))
+			continue;
+		cpSync(filePath, join(outDir, name));
+		copied++;
+	}
+
+	if (copied > 0)
+		console.log(`Copied ${copied} deck media file(s) -> /slides/${slug}/`);
 }
 
 /** Copy deck-local static assets (e.g. mogodb/) beside the built SPA. */
@@ -107,6 +128,7 @@ for (const slug of decks) {
 	const outDir = join(distSlidesDir, slug);
 	console.log(`Building ${slug} -> /slides/${slug}/`);
 	run([entry, "--base", `/slides/${slug}/`, "--out", outDir, "--router-mode", "hash"]);
+	copyDeckRootMedia(slug, outDir);
 	copyDeckStaticAssets(slug, outDir);
 	markPagefindIgnore(outDir);
 }
