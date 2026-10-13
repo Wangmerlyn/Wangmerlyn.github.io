@@ -3,6 +3,8 @@ defineProps({
 	href: { type: String, required: true },
 	kicker: { type: String, default: "" },
 	title: { type: String, required: true },
+	image: { type: String, default: "" },
+	imageAlt: { type: String, default: "" },
 });
 </script>
 
@@ -15,7 +17,8 @@ defineProps({
 			{{ kicker }}
 		</div>
 		<div class="docs-title">{{ title }}</div>
-		<p v-if="$slots.default"><slot /></p>
+		<div v-if="$slots.default" class="docs-body"><slot /></div>
+		<img v-if="image" class="docs-img" :src="image" :alt="imageAlt || title" />
 	</a>
 </template>
 
@@ -46,10 +49,21 @@ defineProps({
 	line-height: 1.35;
 }
 
-.docs-card p {
+.docs-body :deep(p) {
 	margin: 5px 0 0;
 	font-size: 13px;
 	line-height: 1.45;
 	color: #555;
+}
+
+.docs-body :deep(img),
+.docs-img {
+	display: block;
+	width: 100%;
+	max-height: 13.2rem;
+	margin-top: 8px;
+	object-fit: contain;
+	object-position: left center;
+	background: #fff;
 }
 </style>
