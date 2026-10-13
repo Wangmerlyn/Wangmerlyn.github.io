@@ -264,10 +264,12 @@ onUnmounted(() => {
 				</div>
 				<div class="name">{{ event.title }}</div>
 				<p>{{ event.body }}</p>
-				<div v-if="event.thought" class="thought">
-					<div class="thought-kicker">Chain of thought</div>
-					{{ event.thought }}
-				</div>
+				<QuoteCard
+					v-if="event.thought"
+					kind="thought"
+					class="card-thought"
+					:plain="event.thought"
+				/>
 			</article>
 		</div>
 	</div>
@@ -649,5 +651,22 @@ onUnmounted(() => {
 	color: #555;
 	font-size: 12px;
 	line-height: 1.4;
+}
+
+.card :deep(.quote-card.card-thought) {
+	max-width: none;
+	margin: 0.55em 0 0;
+	padding: 7px 9px 8px;
+	border-color: #d2d2d7;
+}
+
+.card :deep(.quote-card.card-thought .quote-kicker) {
+	margin-bottom: 4px;
+	font-size: 10px;
+}
+
+.card :deep(.quote-card.card-thought .quote-body) {
+	font-size: 11px;
+	line-height: 1.42;
 }
 </style>
